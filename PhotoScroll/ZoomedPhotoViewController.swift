@@ -38,7 +38,7 @@ class ZoomedPhotoViewController: UIViewController {
   
 }
 
-extension ZoomedPhotoViewController :UIScrollViewDelegate {
+extension ZoomedPhotoViewController :UIScrollViewDelegate { //Tells the imageView to be zoomed when the uuser is pinching ot make it bigger or smaller 
   func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
     return imageView
   }
