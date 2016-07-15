@@ -35,10 +35,27 @@ class ZoomedPhotoViewController: UIViewController {
   override func viewDidLoad() {
     imageView.image = UIImage(named: photoName)
   }
-  
+  private func updateMinZoomScaleForSize(size: CGSize) { //Can use this with code OR use storyboard, click on 'Scroll View' and change zoom min and max; does the same thing 
+    let widthScale = size.width / imageView.bounds.width //Divides the width of CGSize with the imageView's bound width to get a scale which is the amount maximum the photo can get to in width .
+    let heightScale = size.height / imageView.bounds.height //Same thing as that widthScale does but for heights
+    let minScale = min(widthScale, heightScale) // min returns the smaller of the two, if they are equal ,it will return the x(widthScale)
+    
+    scrollView.minimumZoomScale = minScale //sets the scrollview's minimumZoonScale to minScale
+    
+    scrollView.zoomScale = minScale //sets scrollview's zoom scale to minScale
+  }
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
+    updateMinZoomScaleForSize(view.bounds.size) //calls updateMinZoomScaleForSize to UIView's bound size as the size parameter in private function updateMinZoonScaleForSize
+  }
+
 }
 
-extension ZoomedPhotoViewController :UIScrollViewDelegate { //Tells the imageView to be zoomed when the uuser is pinching ot make it bigger or smaller 
+
+
+
+  extension ZoomedPhotoViewController :UIScrollViewDelegate { //Tells the imageView to be zoomed when the uuser is pinching ot make it bigger or smaller //Calls class 'ZoomedPhotoViewController' as a UiScrollView Delagate
   func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
     return imageView
   }
